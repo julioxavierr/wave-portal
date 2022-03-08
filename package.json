@@ -1,11 +1,12 @@
 {
   "name": "wave-portal",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "scripts/run.js",
   "repository": "git@github.com:julioxavierr/wave-portal.git",
   "author": "Júlio Xavier <julioxavierr@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "dev": "hardhat run scripts/run.js",
     "test": "hardhat test",
     "compile": "hardhat compile",
     "accounts": "hardhat accounts"
