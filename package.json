@@ -6,10 +6,12 @@
   "author": "Júlio Xavier <julioxavierr@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "hardhat run scripts/run.js",
+    "start": "hardhat run scripts/run.js",
+    "dev": "hardhat node",
     "test": "hardhat test",
     "compile": "hardhat compile",
-    "accounts": "hardhat accounts"
+    "accounts": "hardhat accounts",
+    "deploy": "hardhat run scripts/deploy.js --network localhost"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.0",
