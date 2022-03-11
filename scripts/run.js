@@ -1,4 +1,6 @@
 const main = async () => {
+  const [owner, randomPerson] = await hre.ethers.getSigners();
+
   // compile the contract and generate the artifacts
   const waveContractFactory = await hre.ethers.getContractFactory("WavePortal");
 
@@ -9,6 +11,14 @@ const main = async () => {
   await waveContract.deployed();
 
   console.log("Contract deployed to:", waveContract.address);
+  console.log("Contract deployed by:", owner.address);
+
+  const initialWaveCount = await waveContract.getTotalWaves();
+
+  const waveTxn = await waveContract.wave();
+  await waveTxn.wait();
+
+  const waveCount = await waveContract.getTotalWaves();
 };
 
 (async () => {
