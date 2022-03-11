@@ -6,12 +6,25 @@
   "author": "Júlio Xavier <julioxavierr@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "hardhat run scripts/run.js",
-    "dev": "hardhat node",
-    "test": "hardhat test",
-    "compile": "hardhat compile",
-    "accounts": "hardhat accounts",
-    "deploy": "hardhat run scripts/deploy.js --network localhost"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "hardhat:run": "hardhat run scripts/run.js",
+    "hardhat:node": "hardhat node",
+    "hardhat:test": "hardhat test",
+    "hardhat:compile": "hardhat compile",
+    "hardhat:accounts": "hardhat accounts",
+    "hardhat:deploy": "hardhat run scripts/deploy.js --network localhost"
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "ethers": "^5.4.4",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-scripts": "3.2.0"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.0",
@@ -20,5 +33,20 @@
     "ethereum-waffle": "^3.0.0",
     "ethers": "^5.0.0",
     "hardhat": "2.9.1"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
