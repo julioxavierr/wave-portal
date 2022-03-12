@@ -15,7 +15,8 @@
     "hardhat:test": "hardhat test",
     "hardhat:compile": "hardhat compile",
     "hardhat:accounts": "hardhat accounts",
-    "hardhat:deploy": "hardhat run scripts/deploy.js --network localhost"
+    "hardhat:deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "hardhat:deploy:rinkeby": "hardhat run scripts/deploy.js --network rinkeby"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
