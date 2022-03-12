@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import "./App.css";
+import { abi } from "./utils/WavePortal.json";
+
+const CONTRACT_ADDRESS = "0x593082bd053503b51f1bDf2F82626A9501973842";
 
 export default function App() {
   const [currentAccount, setCurrentAccount] = useState("");
@@ -57,7 +60,28 @@ export default function App() {
     }
   };
 
-  const wave = () => {};
+  const handleWave = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const wavePortalContract = new ethers.Contract(
+          CONTRACT_ADDRESS,
+          abi,
+          signer
+        );
+
+        let count = await wavePortalContract.getTotalWaves();
+        console.log("Retrieved total wave count...", count.toNumber());
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="mainContainer">
@@ -67,7 +91,7 @@ export default function App() {
         <div className="bio">Connect your Ethereum wallet and wave at me!</div>
 
         {currentAccount ? (
-          <button className="waveButton" onClick={wave}>
+          <button className="waveButton" onClick={handleWave}>
             Wave at Me
           </button>
         ) : (
