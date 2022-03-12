@@ -20,9 +20,7 @@ export default function App() {
           console.log("We have the ethereum object", ethereum);
         }
 
-        /*
-         * Check if we're authorized to access the user's wallet
-         */
+        // Check if we're authorized to access the user's wallet
         const accounts = await ethereum.request({ method: "eth_accounts" });
 
         if (accounts.length !== 0) {
@@ -73,7 +71,17 @@ export default function App() {
           signer
         );
 
-        let count = await wavePortalContract.getTotalWaves();
+        const initialCount = await wavePortalContract.getTotalWaves();
+        console.log("Retrieved total wave count...", initialCount.toNumber());
+
+        // Execute the actual wave from your smart contract
+        const waveTxn = await wavePortalContract.wave();
+        console.log("Mining...", waveTxn.hash);
+
+        await waveTxn.wait();
+        console.log("Mined -- ", waveTxn.hash);
+
+        const count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total wave count...", count.toNumber());
       } else {
         console.log("Ethereum object doesn't exist!");
