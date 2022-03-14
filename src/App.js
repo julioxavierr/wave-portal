@@ -57,28 +57,15 @@ export default function App() {
             signer
           );
 
-          /*
-           * Call the getAllWaves method from your Smart Contract
-           */
           const waves = await wavePortalContract.getAllWaves();
 
-          /*
-           * We only need address, timestamp, and message in our UI so let's
-           * pick those out
-           */
-          let wavesCleaned = [];
-          waves.forEach((wave) => {
-            wavesCleaned.push({
-              address: wave.waver,
-              timestamp: new Date(wave.timestamp * 1000),
-              message: wave.message,
-            });
-          });
+          const sanitizedWaves = waves.map((wave) => ({
+            address: wave.waver,
+            timestamp: new Date(wave.timestamp * 1000),
+            message: wave.message,
+          }));
 
-          /*
-           * Store our data in React State
-           */
-          setAllWaves(wavesCleaned);
+          setAllWaves(sanitizedWaves);
         } else {
           console.log("Ethereum object doesn't exist!");
         }
