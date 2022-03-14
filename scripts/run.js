@@ -14,16 +14,18 @@ const main = async () => {
   console.log("Contract deployed by:", owner.address);
 
   const initialWaveCount = await waveContract.getTotalWaves();
+  console.log(initialWaveCount.toNumber());
 
-  const waveTxn = await waveContract.wave();
-  await waveTxn.wait();
+  const firstWaveTxn = await waveContract.wave("A message!");
+  await firstWaveTxn.wait(); // Wait for the transaction to be mined
 
-  await waveContract.getTotalWaves();
+  const secondWaveTxn = await waveContract
+    .connect(randomPerson)
+    .wave("Another message!");
+  await secondWaveTxn.wait(); // Wait for the transaction to be mined
 
-  const waveRandomPersonTxn = await waveContract.connect(randomPerson).wave();
-  await waveRandomPersonTxn.wait();
-
-  await waveContract.getTotalWaves();
+  const allWaves = await waveContract.getAllWaves();
+  console.log(allWaves);
 };
 
 (async () => {
