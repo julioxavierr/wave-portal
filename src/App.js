@@ -8,6 +8,7 @@ const CONTRACT_ADDRESS = "0x63D832BfB2FBd0088d8C31DE684C3E52acBA44B9";
 export default function App() {
   const [currentAccount, setCurrentAccount] = useState("");
   const [allWaves, setAllWaves] = useState([]);
+  const [message, setMessage] = useState("");
 
   /** Get current account/wallet */
   useEffect(() => {
@@ -114,7 +115,7 @@ export default function App() {
         console.log("Retrieved total wave count...", initialCount.toNumber());
 
         // Execute the actual wave from your smart contract
-        const waveTxn = await wavePortalContract.wave("This is a message!");
+        const waveTxn = await wavePortalContract.wave(message);
         console.log("Mining...", waveTxn.hash);
 
         await waveTxn.wait();
@@ -122,6 +123,8 @@ export default function App() {
 
         const count = await wavePortalContract.getTotalWaves();
         console.log("Retrieved total wave count...", count.toNumber());
+
+        setMessage("");
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -139,23 +142,33 @@ export default function App() {
 
         {currentAccount ? (
           <>
-            <button className="waveButton" onClick={handleWave}>
-              Wave at Me
-            </button>
-            {allWaves.map((wave, index) => (
-              <div
-                key={index}
-                style={{
-                  backgroundColor: "OldLace",
-                  marginTop: "16px",
-                  padding: "8px",
-                }}
-              >
-                <div>Address: {wave.address}</div>
-                <div>Time: {wave.timestamp.toString()}</div>
-                <div>Message: {wave.message}</div>
-              </div>
-            ))}
+            <div className="waveContainer">
+              <input
+                className="waveInput"
+                type="text"
+                value={message}
+                onChange={(event) => setMessage(event.target.value || "")}
+              />
+              <button className="waveButton" onClick={handleWave}>
+                Wave at Me
+              </button>
+            </div>
+            <div>
+              {allWaves.map((wave, index) => (
+                <div
+                  key={index}
+                  style={{
+                    backgroundColor: "OldLace",
+                    marginTop: "16px",
+                    padding: "8px",
+                  }}
+                >
+                  <div>Address: {wave.address}</div>
+                  <div>Time: {wave.timestamp.toString()}</div>
+                  <div>Message: {wave.message}</div>
+                </div>
+              ))}
+            </div>
           </>
         ) : (
           <button className="waveButton" onClick={handleConnectWallet}>
