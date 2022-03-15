@@ -135,6 +135,42 @@ export default function App() {
     }
   };
 
+  /** Listen in for emitter events */
+  useEffect(() => {
+    const { ethereum } = window;
+
+    if (!ethereum) return;
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+
+    const wavePortalContract = new ethers.Contract(
+      CONTRACT_ADDRESS,
+      abi,
+      signer
+    );
+
+    const onNewWave = (from, timestamp, message) => {
+      console.log("NewWave", from, timestamp, message);
+      setAllWaves((prevState) => [
+        ...prevState,
+        {
+          address: from,
+          timestamp: new Date(timestamp * 1000),
+          message: message,
+        },
+      ]);
+    };
+
+    wavePortalContract.on("NewWave", onNewWave);
+
+    return () => {
+      if (wavePortalContract) {
+        wavePortalContract.off("NewWave", onNewWave);
+      }
+    };
+  }, []);
+
   return (
     <div className="mainContainer">
       <div className="dataContainer">
